@@ -3,7 +3,7 @@ module.exports = function(grunt) {
     'use strict';
 
     grunt.initConfig({
-        pkg: grunt.file.readJSON( "package.json" ),
+        pkg: grunt.file.readJSON( 'package.json' ),
         jshint: {
             files: ['mousewheel.js', 'Gruntfile.js', 'karma.conf.js'],
             options: {
@@ -26,11 +26,11 @@ module.exports = function(grunt) {
             }
         },
         watch: {
-            project : {
+            development : {
                 files: ['mousewheel.js', 'Gruntfile.js', 'karma.conf.js'],
-                tasks: ['jshint', 'karma', 'uglify', 'watch'],
+                tasks: ['jshint'],
                 options : {
-                    livereload : true
+                    livereload : false
                 }
             }
         }
@@ -41,6 +41,8 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-watch');
 
-    grunt.registerTask('default', ['jshint', 'karma', 'uglify', 'watch']);
+    grunt.registerTask('tests', ['karma']);
+    grunt.registerTask('development', ['jshint', 'watch:development']);
+    grunt.registerTask('production', ['jshint', 'watch']);
 
 };

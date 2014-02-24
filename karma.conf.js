@@ -4,10 +4,10 @@ module.exports = function(config) {
     'use strict';
 
 	config.set({
-		files : [
-			'test/js/*.js'
-		],
-		basePath: '..',
+        files: [
+            'mousewheel.js',
+            'tests/*.js'
+        ],
 		frameworks: ['jasmine'],
 		browser : ['Chrome', 'Firefox', 'Safari', 'Opera', 'IE', 'PhantomJS'],
 		exclude : [],

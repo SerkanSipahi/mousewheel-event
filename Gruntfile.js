@@ -7,9 +7,8 @@ module.exports = function(grunt) {
         jshint: {
             files: ['mousewheel.js', 'Gruntfile.js', 'karma.conf.js'],
             options: {
-                strict:true,
                 expr:true,
-                newcap: true,
+                newcap: false,
                 quotmark: 'single',
                 validthis:true,
                 ignores: ['libs/*js'],

@@ -1,11 +1,26 @@
 {
-    "name": "Mousewheel",
+    "name": "mousewheel",
     "version": "0.1.0",
+    "homepage": "http://nerdmedia.de",
     "devDependencies": {
         "grunt": "~0.4.2",
         "grunt-contrib-uglify": "~0.3.2",
         "grunt-contrib-jshint": "~0.8.0",
         "grunt-contrib-watch": "~0.5.3",
         "grunt-karma": "~0.6.2"
-    }
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/SerkanSipahi/mousewheel-event"
+    },
+    "keywords": [
+        "mousewheel",
+        "event"
+    ],
+    "licenses": [
+        {
+            "type": "MIT"
+            //"url": ""https://github.com/SerkanSipahi/mousewheel-event .... ...."
+        }
+    ]
 }

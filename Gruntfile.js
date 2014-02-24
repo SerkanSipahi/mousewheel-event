@@ -3,6 +3,7 @@ module.exports = function(grunt) {
     'use strict';
 
     grunt.initConfig({
+        pkg: grunt.file.readJSON( "package.json" ),
         jshint: {
             files: ['mousewheel.js', 'Gruntfile.js', 'karma.conf.js'],
             options: {

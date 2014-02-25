@@ -11,7 +11,7 @@ module.exports = function(grunt) {
                 newcap: false,
                 quotmark: 'single',
                 validthis:true,
-                ignores: ['libs/*js'],
+                //ignores: ['libs/*js'],
                 loopfunc: true,
                 curly: true,
                 eqeqeq: true,

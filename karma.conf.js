@@ -5,6 +5,7 @@ module.exports = function(config) {
 
 	config.set({
         files: [
+            'libs/classy.js',
             'mousewheel.js',
             'tests/*.js'
         ],

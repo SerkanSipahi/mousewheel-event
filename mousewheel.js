@@ -29,9 +29,11 @@
          *
          */
         feature : {
-            addEventListener : !!window.addEventListener,
+            addEventListener : !!Element.prototype.addEventListener,
             querySelectorAll : !!document.querySelectorAll,
-            functionBind     : !!Function.prototype.bind
+            functionBind     : !!Function.prototype.bind,
+            // >= IE8, Chrome, Safari, Opera ansonsten 'DOMMouseScroll'
+            mousewheel       : !!('onmousewheel' in document.createElement('div'))
         },
 
         /*
@@ -52,6 +54,11 @@
             //http://stackoverflow.com/questions/384286/javascript-isdom-how-do-you-check-if-a-javascript-object-is-a-dom-object
         },
         _elementExists : function(value){
+            if(this._isDomElement(value)){
+
+            } else {
+
+            }
             return true;
         },
 

@@ -1,10 +1,9 @@
-### Mousewheel-Eventhandler ( in progress )
+### Mousewheel-Eventhandler ( please do not use, "lib is in progress" )
 
 #### Features
 
 - Tablet/Smartphone Support
 - AMD-Support( requirejs, nodejs  )
--
 
 #### Browser Support
 - Crossbrowser Support

@@ -1,10 +1,15 @@
 ### Mousewheel-Eventhandler ( in progress )
 
 #### Features
-- Crossbrowser Support
-- Tablets/Smartphone Support
+
+- Tablet/Smartphone Support
 - AMD-Support( requirejs, nodejs  )
-- Vanillajs( plain Javascript )
+-
+
+#### Browser Support
+- Crossbrowser Support
+    - Chrome, Firefox, Opera, IE9,10,11 ( Vanillajs, plain Javascript )
+    - <= IE8, we need jQuery as dependence
 
 #### Notes
 

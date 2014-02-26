@@ -4,7 +4,6 @@
 
 - Tablet/Smartphone Support
 - AMD-Support( requirejs, nodejs  )
--
 
 #### Browser Support
 - Crossbrowser Support

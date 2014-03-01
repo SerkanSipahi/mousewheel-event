@@ -5,80 +5,92 @@
     Classy('Mousewheel', {
 
         __constructor : function(){
+
             this._init.apply(this, arguments);
+
         },
 
-        /*
+        /**
          * @default options
          */
         _defaults : {
 
         },
 
-       /*
-        * @collection of useful selector matcher
+       /**
+        * @selector matcher
+        * _$('#test-id) <--- get domNode
         */
-        _$      : null,
-        _$$     : null,
-        _$id    : null,
-        _$class : null,
-        _$tag   : null,
+        _$ : null,
 
-        /*
+        /**
          * @detect featues
          *
          */
-        feature : {
+        _feature : {
             addEventListener : !!Element.prototype.addEventListener,
+            preventDefault   : !!Event.prototype.preventDefault,
+            stopPropagation  : !!Event.prototype.stopPropagation,
             querySelectorAll : !!document.querySelectorAll,
             functionBind     : !!Function.prototype.bind,
             // >= IE8, Chrome, Safari, Opera ansonsten 'DOMMouseScroll'
             mousewheel       : !!('onmousewheel' in document.createElement('div'))
         },
 
-        /*
+        /**
          * @_c = Alisas prefix for constructor
          */
         _cElement  : null,
         _cFunction : null,
         _cArgs     : null,
 
-        /*
+        /**
+         * its depends to _initQuerySelector
+         */
+        _eventListeners : [],
+        _addEventListener : null,
+        _removeEventListener : null,
+
+        /**
          * @Helper functions
          */
-        _protoToString : {}.toString,
-        _isFunction : function(value){
-            return true;
+        _is : function(typeName, value){
+            return {}.toString.apply(value) === '[object ' + typeName + ']';
         },
-        _isDomElement : function(value){
-            //http://stackoverflow.com/questions/384286/javascript-isdom-how-do-you-check-if-a-javascript-object-is-a-dom-object
+        _isDomNode : function(obj){
+            return obj.nodeType > 0;
         },
         _elementExists : function(value){
-            if(this._isDomElement(value)){
 
-            } else {
+            var res = true;
+
+            if(this._is('String', value)){
+
+            } else if(this._isDomNode(value) && this._is('Object', value)) {
 
             }
-            return true;
+            return res;
         },
 
-        /*
+        /**
          * Custom exceptions
          */
-        _NullException : function(message){
-            this.message = message;
-            this.name = 'NullException';
+        _Exception : function(name, message){
+            this.name = name+'Exception';
+            this.message = message || 'Default Message';
         },
-        _ExistsException : function(message){
-            this.message = message;
-            this.name = 'ExistsException';
+        _initCustomErrorExceptions : function(){
+            this._Exception.prototype = new Error();
+            this._Exception.prototype.constructor = this._NullException;
         },
 
-        /*
+        /**
          * @core logic
          * private methods
          **/
         _init : function(){
+
+            this._initCustomErrorExceptions();
 
             /*
              * prepare constructor vars
@@ -88,61 +100,143 @@
             this._cFunction = this._cArgs[1] || null;
 
             if(this._cElement===null && this._cFunction===null) {
-                throw new this._NullException('do not pass any arguments ( constructor )');
+                throw new this._Exception('Null', 'do not pass any arguments ( constructor )');
             } else if(this._cFunction===null){
-                throw new this._NullException('you forget to pass the callback function ( constructor )');
+                throw new this._Exception('Null', 'you forget to pass the callback function ( constructor )');
             }
 
-            /*
+            /**
              * return if we already have instantiated the element
              */
             if(this._isElementInstantiated()){ return; }
 
-            /*
-             * check constructor vars
-             */
             if(!this._elementExists(this._cElement)){
-                throw new this._ExistsException('Element not exists on dom tree');
+                throw new this._Exception('Exists', 'Element not exists on dom tree');
             }
-            if(!this._isFunction(this._cFunction)){
-                throw new this._ExistsException('Could not find callback function');
-            }
-
-            /*
-             * detect features
-             */
-            if(this.feature.querySelectorAll && this.feature.functionBind){
-                this._initFeatureFunction('native');
-            } else {
-                this._initFeatureFunction('fallback');
+            if(!this._is('Function', this._cFunction)){
+                throw new this._Exception('Exists', 'Could not find callback function');
             }
 
-            /*
-             * prepare event listener
-             */
-
-            this._prepareEventListener();
+            this._initEventListener();
+            this._initQuerySelector();
+            this._initMousewheelEventType();
 
 
         },
-        _initFeatureFunction : function(value){
-            if(value==='native'){
-                console.log('native Feature');
-                this._$      = d.querySelectorAll.bind(d);
-                this._$$     = d.querySelector.bind(d);
-                this._$id    = d.getElementById.bind(d);
-                this._$class = d.getElementsByClassName.bind(d);
-                this._$tag   = d.getElementsByTagName.bind(d);
-            } else if(value==='fallback'){
-                console.log('fallback Feature');
-                console.log('$', this._$);
-                this._$      = w.$ || null;
+        _initMousewheelEventType : function(){
+
+        },
+        _initQuerySelector : function(){
+
+            if(this._feature.querySelectorAll && this._feature.functionBind){
+                this._$ = d.querySelectorAll.bind(d);
+            } else {
+                // > simulate querySelectorAll for ie7, ie8
+                // > http://www.codecouch.com/2012/05/adding-document-queryselectorall-support-to-ie-7/
+                var s = d.createStyleSheet();
+                d.querySelectorAll = function(r, c, i, j, a) {
+                    a=d.all, c=[], r = r.replace(/\[for\b/gi, '[htmlFor').split(',');
+                    for (i=r.length; i--;) {
+                        s.addRule(r[i], 'k:v');
+                        for (j=a.length; j--;) { a[j].currentStyle.k && c.push(a[j]); }
+                        s.removeRule(0);
+                    }
+                    return c;
+                };
+
+                // > simulate functionBind for ie7, ie8
+                // > https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind
+                Function.prototype.bind = function (oThis) {
+                    if (typeof this !== 'function') {
+                        throw new TypeError('Function.prototype.bind - what is trying to be bound is not callable');
+                    }
+
+                    var aArgs = Array.prototype.slice.call(arguments, 1),
+                        fToBind = this,
+                        fNOP = function () {},
+                        fBound = function () {
+                            return fToBind.apply(this instanceof fNOP && oThis ? this : oThis,
+                                aArgs.concat(Array.prototype.slice.call(arguments)));
+                        };
+
+                    fNOP.prototype = this.prototype;
+                    fBound.prototype = new fNOP();
+
+                    return fBound;
+                };
+
+                this._$ = d.querySelectorAll.bind(d);
+
             }
+            /**
+             *
+             * map addEventListener to on
+             */
+            Element.prototype.on = Element.prototype.addEventListener;
         },
         _isElementInstantiated : function(){
 
         },
-        _prepareEventListener : function(){
+        _initEventListener : function(){
+
+            if(!this._feature.preventDefault){
+                Event.prototype.preventDefault=function(){
+                    this.returnValue=false;
+                };
+            }
+            if(!this._feature.stopPropagation){
+                Event.prototype.stopPropagation=function(){
+                    this.cancelBubble=true;
+                };
+            }
+
+            if(!this._feature.addEventListener){
+
+                var context = this;
+
+                this._eventListeners=[];
+                this._addEventListener=function(type, listener){
+                        var self=this,
+                            wrapper=function(e){
+
+                                if(!e) { e = w.event;}
+
+                                e.target= e.srcElement;
+                                e.currentTarget=self;
+                                if(listener.handleEvent){
+                                    listener.handleEvent(e);
+                                } else {
+                                    listener.call(self, e);
+                                }
+                            };
+
+                        this.attachEvent('on'+type, wrapper);
+                        context._eventListeners.push({object:this, type:type, listener:listener, wrapper:wrapper});
+                };
+                this._removeEventListener=function(type, listener){
+                        var counter=0,i= 0,eListener;
+                        for(i=0,counter=context._eventListeners.length;i<counter;i++){
+                            eListener=context._eventListeners[i];
+                            if(eListener.object!==this && eListener.type!==type && eListener.listener!==listener){
+                                continue;
+                            }
+                            this.detachEvent('on'+type, eListener.wrapper); delete context._eventListeners[i];
+                        }
+                    };
+
+                Element.prototype.addEventListener=this._addEventListener;
+                Element.prototype.addEventListener=this._removeEventListener;
+
+                if (HTMLDocument) {
+                    HTMLDocument.prototype.addEventListener=this._addEventListener;
+                    HTMLDocument.prototype.addEventListener=this._removeEventListener;
+                }
+                if (Window) {
+                    Window.prototype.addEventListener=this._addEventListener;
+                    Window.prototype.addEventListener=this._removeEventListener;
+                }
+
+            }
 
         },
 

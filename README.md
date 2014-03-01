@@ -4,11 +4,11 @@
 
 - Tablet/Smartphone Support
 - AMD-Support( requirejs, nodejs  )
+- no dependencies
 
 #### Browser Support
 - Crossbrowser Support
-    - Chrome, Firefox, Opera, IE9,10,11 ( Vanillajs, plain Javascript )
-    - <= IE8, we need jQuery as dependence
+    - Chrome, Firefox, Opera, IE8, 9, 10,11 ( Vanillajs, plain Javascript )
 
 #### Notes
 

@@ -2,10 +2,21 @@
 <html>
 <head>
     <title>Mousewheel</title>
+    <script src="libs/domready.min.js"></script>
     <script src="libs/classy.js"></script>
     <script src="mousewheel.js"></script>
+    <script>
+        domReady(function () {
+            var instance = new Mousewheel('#test-id', function(e){});
+            instance._$('#some-id')[0].on('click', function(e){
+                console.log('its works!');
+            });
+        });
+    </script>
 </head>
 <body>
-
+    <div id="some-id" style="width:100px; height:50px; background-color:blue; color:white;">
+        Hello World!
+    </div>
 </body>
 </html>

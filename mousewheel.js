@@ -5,9 +5,7 @@
     Classy('Mousewheel', {
 
         __constructor : function(){
-
             this._init.apply(this, arguments);
-
         },
 
         /**
@@ -34,7 +32,7 @@
             querySelectorAll : !!document.querySelectorAll,
             functionBind     : !!Function.prototype.bind,
             // >= IE8, Chrome, Safari, Opera ansonsten 'DOMMouseScroll'
-            mousewheel       : !!('onmousewheel' in document.createElement('div'))
+            mousewheel       : !!('onmousewheel' in d.createElement('div'))
         },
 
         /**
@@ -50,6 +48,11 @@
         _eventListeners : [],
         _addEventListener : null,
         _removeEventListener : null,
+
+        /**
+         * detected mousewheel type
+         */
+        _mousewheelType : 'mousewheel',
 
         /**
          * @Helper functions
@@ -119,12 +122,14 @@
 
             this._initEventListener();
             this._initQuerySelector();
+            this._mapEventListenersToOnOff();
             this._initMousewheelEventType();
-
 
         },
         _initMousewheelEventType : function(){
-
+            if(!this._feature.mousewheel){
+                this._mousewheelType = 'DOMMouseScroll';
+            }
         },
         _initQuerySelector : function(){
 
@@ -143,14 +148,12 @@
                     }
                     return c;
                 };
-
                 // > simulate functionBind for ie7, ie8
                 // > https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind
                 Function.prototype.bind = function (oThis) {
                     if (typeof this !== 'function') {
                         throw new TypeError('Function.prototype.bind - what is trying to be bound is not callable');
                     }
-
                     var aArgs = Array.prototype.slice.call(arguments, 1),
                         fToBind = this,
                         fNOP = function () {},
@@ -164,15 +167,21 @@
 
                     return fBound;
                 };
-
                 this._$ = d.querySelectorAll.bind(d);
-
             }
-            /**
-             *
-             * map addEventListener to on
-             */
-            Element.prototype.on = Element.prototype.addEventListener;
+        },
+        _mapEventListenersToOnOff : function(){
+
+            var addEventListener    = Element.prototype.addEventListener,
+                removeEventListener = Element.prototype.removeEventListener;
+
+            Element.prototype.on  = addEventListener;
+            Element.prototype.off = removeEventListener;
+
+            if (Window) {
+                Window.prototype.on  = addEventListener;
+                Window.prototype.off = removeEventListener;
+            }
         },
         _isElementInstantiated : function(){
 
@@ -196,44 +205,43 @@
 
                 this._eventListeners=[];
                 this._addEventListener=function(type, listener){
-                        var self=this,
-                            wrapper=function(e){
 
-                                if(!e) { e = w.event;}
+                    var self=this,
+                        wrapper=function(e){
 
-                                e.target= e.srcElement;
-                                e.currentTarget=self;
-                                if(listener.handleEvent){
-                                    listener.handleEvent(e);
-                                } else {
-                                    listener.call(self, e);
-                                }
-                            };
+                            if(!e) { e = w.event;}
 
-                        this.attachEvent('on'+type, wrapper);
-                        context._eventListeners.push({object:this, type:type, listener:listener, wrapper:wrapper});
+                            e.target= e.srcElement;
+                            e.currentTarget=self;
+                            if(listener.handleEvent){
+                                listener.handleEvent(e);
+                            } else {
+                                listener.call(self, e);
+                            }
+                        };
+
+                    this.attachEvent('on'+type, wrapper);
+                    context._eventListeners.push({object:this, type:type, listener:listener, wrapper:wrapper});
+
                 };
                 this._removeEventListener=function(type, listener){
-                        var counter=0,i= 0,eListener;
-                        for(i=0,counter=context._eventListeners.length;i<counter;i++){
-                            eListener=context._eventListeners[i];
-                            if(eListener.object!==this && eListener.type!==type && eListener.listener!==listener){
-                                continue;
-                            }
-                            this.detachEvent('on'+type, eListener.wrapper); delete context._eventListeners[i];
+
+                    var counter=0,i= 0,eListener;
+                    for(i=0,counter=context._eventListeners.length;i<counter;i++){
+                        eListener=context._eventListeners[i];
+                        if(eListener.object!==this && eListener.type!==type && eListener.listener!==listener){
+                            continue;
                         }
-                    };
+                        this.detachEvent('on'+type, eListener.wrapper); delete context._eventListeners[i];
+                    }
+                };
 
                 Element.prototype.addEventListener=this._addEventListener;
-                Element.prototype.addEventListener=this._removeEventListener;
+                Element.prototype.removeEventListener=this._removeEventListener;
 
-                if (HTMLDocument) {
-                    HTMLDocument.prototype.addEventListener=this._addEventListener;
-                    HTMLDocument.prototype.addEventListener=this._removeEventListener;
-                }
                 if (Window) {
                     Window.prototype.addEventListener=this._addEventListener;
-                    Window.prototype.addEventListener=this._removeEventListener;
+                    Window.prototype.removeEventListener=this._removeEventListener;
                 }
 
             }

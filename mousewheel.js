@@ -137,7 +137,7 @@
 
             for(item=0, length=res.length; item<length; item++){
                 res[item].on(this._mousewheel, function(e){
-                    e = this._adjustMousewheelValues(e);
+                    this._adjustMousewheelValues(e);
                     this._cFunction.apply(this, arguments);
                 }.bind(this));
             }
@@ -242,7 +242,7 @@
                     var self=this,
                         wrapper=function(e){
 
-                            if(!e) { e = w.event;}
+                            e = window.event || e;
 
                             e.target= e.srcElement;
                             e.currentTarget=self;

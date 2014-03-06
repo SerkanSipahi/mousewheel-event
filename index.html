@@ -7,6 +7,7 @@
     <script src="mousewheel.js"></script>
     <script>
         domReady(function () {
+            /*
             var addInstance    = new Mousewheel('#test-id', function(e){}),
                 removeInstance = new Mousewheel('#other-id', function(e){}),
                 customFunction = function(e){
@@ -21,9 +22,12 @@
                 addInstance._$('#some-id')[0].off('click', customFunction);
                 addInstance._$('#some-id')[0].innerHTML = 'Click disable';
             });
+            */
 
-            new Mousewheel('body', function(e){
+            new Mousewheel('#some-id', function(e){
+                console.log('callback');
                 console.log(e);
+                //addInstance._$('#other-id')[0].innerHTML = e.wheelDeltaY || e.detail;
             });
 
         });

@@ -128,6 +128,22 @@ describe("Initialize Helper/Crossbrowser functions...", function() {
         });
     });
 
+    describe("addEventHandler Testing( multiple items ):", function() {
+
+        it("click test", function() {
+
+        });
+
+    });
+
+    describe("removeEventHandler Testing( multiple items ):", function() {
+
+        it("click test", function() {
+
+        });
+
+    });
+
 });
 
 describe("Adjust Mousewheel event values...", function() {

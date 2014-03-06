@@ -1,4 +1,4 @@
-describe("Initialize helper functions...", function() {
+describe("Initialize Helper/Crossbrowser functions...", function() {
 
     //Fixtures
     var instance        = {},
@@ -10,8 +10,8 @@ describe("Initialize helper functions...", function() {
 
     setUpHTMLFixture();
 
-    beforeEach(function() {
-        instance = new Mousewheel('#test-id', function(e){});
+    instance = new Mousewheel('#test-id', function(e){
+        console.log(e);
     });
 
     describe('Type Testing:', function(){
@@ -34,6 +34,13 @@ describe("Initialize helper functions...", function() {
         });
 
 
+    });
+
+    describe("check constructor vars", function() {
+
+        it("...", function() {
+            //....
+        });
     });
 
     //works fine with ie8,9,10,11
@@ -79,10 +86,11 @@ describe("Initialize helper functions...", function() {
 
     });
 
-    describe("eventHandler Testing:", function() {
+    describe("addEventHandler Testing( single item ):", function() {
 
         it("click test", function() {
 
+            //attach event
             instance._$('#some-id')[0].on('click', function(e){
                 console.log('Hello World');
             });
@@ -96,6 +104,51 @@ describe("Initialize helper functions...", function() {
 
         });
     });
+
+    describe("removeEventHandler Testing( single item ):", function() {
+
+        it("click test", function() {
+
+            //attach event
+            var customFunction = function(e){
+                console.log('Hello World');
+            };
+
+            instance._$('#some-id')[0].on('click', customFunction)
+                                      .off('click', customFunction);
+
+            // > YUI click not working on IE8
+            // > but tested manuell on index.html and its work!
+
+            YUI().use('node-event-simulate', function(Y) {
+                Y.one("#some-id").simulate("click");
+                instance = {};
+            });
+
+        });
+    });
+
+});
+
+describe("Adjust Mousewheel event values...", function() {
+
+    //Fixtures
+    var instance = {};
+
+    it("click test", function() {
+
+        new Mousewheel('#some-id', function(e){
+            console.log(e);
+        });
+
+        YUI().use('node-event-simulate', function(Y) {
+            Y.one("#some-id").simulate("scroll");
+            instance = {};
+        });
+
+    });
+
+
 
 });
 

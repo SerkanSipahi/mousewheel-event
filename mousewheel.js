@@ -52,7 +52,7 @@
         /**
          * detected mousewheel type
          */
-        _mousewheelType : 'mousewheel',
+        _mousewheel : 'mousewheel',
 
         /**
          * @Helper functions
@@ -120,15 +120,36 @@
                 throw new this._Exception('Exists', 'Could not find callback function');
             }
 
+            // > init cross browser supports
             this._initEventListener();
             this._initQuerySelector();
             this._mapEventListenersToOnOff();
             this._initMousewheelEventType();
 
+            // > start mousewheel eventhandler
+            this._start();
+
+
+        },
+        _start : function(){
+
+            var res = this._$(this._cElement), item= 0, length=0;
+
+            for(item=0, length=res.length; item<length; item++){
+                res[item].on(this._mousewheel, function(e){
+                    e = this._adjustMousewheelValues(e);
+                    this._cFunction.apply(this, arguments);
+                }.bind(this));
+            }
+
+        },
+        _adjustMousewheelValues : function(e){
+            e.testomat = '.:: Hello World ::.';
+            return e;
         },
         _initMousewheelEventType : function(){
             if(!this._feature.mousewheel){
-                this._mousewheelType = 'DOMMouseScroll';
+                this._mousewheel = 'DOMMouseScroll';
             }
         },
         _initQuerySelector : function(){
@@ -172,21 +193,35 @@
         },
         _mapEventListenersToOnOff : function(){
 
-            var addEventListener    = Element.prototype.addEventListener,
-                removeEventListener = Element.prototype.removeEventListener;
+            var self                    = this,
+                addEventListener        = Element.prototype.addEventListener,
+                removeEventListener     = Element.prototype.removeEventListener,
+                addEventListenerCain    = function(){
+                    addEventListener.apply(this, arguments); return this;
+                },
+                removeEventListenerCain = function(){
+                    removeEventListener.apply(this, arguments); return this;
+                };
 
-            Element.prototype.on  = addEventListener;
-            Element.prototype.off = removeEventListener;
+            Element.prototype.on  = addEventListenerCain;
+            Element.prototype.off = removeEventListenerCain;
 
             if (Window) {
-                Window.prototype.on  = addEventListener;
-                Window.prototype.off = removeEventListener;
+                Window.prototype.on  = addEventListenerCain;
+                Window.prototype.off = removeEventListenerCain;
             }
+            if(Document){
+                Document.prototype.on  = addEventListenerCain;
+                Document.prototype.off = removeEventListenerCain;
+            }
+
         },
         _isElementInstantiated : function(){
 
         },
         _initEventListener : function(){
+
+            var context = this;
 
             if(!this._feature.preventDefault){
                 Event.prototype.preventDefault=function(){
@@ -201,8 +236,6 @@
 
             if(!this._feature.addEventListener){
 
-                var context = this;
-
                 this._eventListeners=[];
                 this._addEventListener=function(type, listener){
 
@@ -213,6 +246,11 @@
 
                             e.target= e.srcElement;
                             e.currentTarget=self;
+
+                            if(context.prototype._adjustMousewheelValues) {
+                                e = context._adjustMousewheelValues.apply(self, e);
+                            }
+
                             if(listener.handleEvent){
                                 listener.handleEvent(e);
                             } else {
@@ -229,19 +267,24 @@
                     var counter=0,i= 0,eListener;
                     for(i=0,counter=context._eventListeners.length;i<counter;i++){
                         eListener=context._eventListeners[i];
-                        if(eListener.object!==this && eListener.type!==type && eListener.listener!==listener){
-                            continue;
+
+                        if(eListener.object===this && eListener.type===type && eListener.listener===listener){
+                            this.detachEvent('on'+type, eListener.wrapper); delete context._eventListeners[i];
                         }
-                        this.detachEvent('on'+type, eListener.wrapper); delete context._eventListeners[i];
+
                     }
                 };
 
-                Element.prototype.addEventListener=this._addEventListener;
-                Element.prototype.removeEventListener=this._removeEventListener;
+                Element.prototype.addEventListener = this._addEventListener;
+                Element.prototype.removeEventListener = this._removeEventListener;
 
                 if (Window) {
-                    Window.prototype.addEventListener=this._addEventListener;
-                    Window.prototype.removeEventListener=this._removeEventListener;
+                    Window.prototype.addEventListener = this._addEventListener;
+                    Window.prototype.removeEventListener = this._removeEventListener;
+                }
+                if (Document) {
+                    Document.prototype.addEventListener = this._addEventListener;
+                    Document.prototype.removeEventListener = this._removeEventListener;
                 }
 
             }

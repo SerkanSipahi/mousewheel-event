@@ -7,16 +7,34 @@
     <script src="mousewheel.js"></script>
     <script>
         domReady(function () {
-            var instance = new Mousewheel('#test-id', function(e){});
-            instance._$('#some-id')[0].on('click', function(e){
-                console.log('its works!');
+            var addInstance    = new Mousewheel('#test-id', function(e){}),
+                removeInstance = new Mousewheel('#other-id', function(e){}),
+                customFunction = function(e){
+                    alert('its works!');
+                };
+
+            addInstance._$('#some-id')[0].on('click', customFunction);
+
+            removeInstance._$('#other-id')[0].on('click', function(e){
+
+                // > remove event listener
+                addInstance._$('#some-id')[0].off('click', customFunction);
+                addInstance._$('#some-id')[0].innerHTML = 'Click disable';
             });
+
+            new Mousewheel('body', function(e){
+                console.log(e);
+            });
+
         });
     </script>
 </head>
 <body>
     <div id="some-id" style="width:100px; height:50px; background-color:blue; color:white;">
-        Hello World!
+        Click me!
+    </div>
+    <div id="other-id" style="width:100px; height:50px; background-color:blue; color:white; margin-top:10px;">
+        Remove event handler
     </div>
 </body>
 </html>

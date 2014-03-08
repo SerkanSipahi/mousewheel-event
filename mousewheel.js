@@ -12,6 +12,8 @@
          * @default options
          */
         _defaults : {
+            prevenDefault : false,
+            stopPropagation : false
 
         },
 
@@ -59,6 +61,9 @@
          */
         _is : function(typeName, value){
             return {}.toString.apply(value) === '[object ' + typeName + ']';
+        },
+        _isset : function(prop, obj){
+            return ( prop in obj );
         },
         _isDomNode : function(obj){
             return obj.nodeType > 0;
@@ -133,19 +138,28 @@
         },
         _start : function(){
 
-            var res = this._$(this._cElement), item= 0, length=0;
-
+            var res = this._$(this._cElement), item= 0, length= 0, self=this;
             for(item=0, length=res.length; item<length; item++){
-                res[item].on(this._mousewheel, function(e){
-                    this._adjustMousewheelValues(e);
-                    this._cFunction.apply(this, arguments);
-                }.bind(this));
+                res[item].on(self._mousewheel, function(e){
+
+                    e.__mousewheel__ = {};
+                    e.__mousewheel__.currentTarget=this;
+                    e.__mousewheel__.instance=self;
+
+                    self._afterEventBeforeCallback.apply(this, [e]);
+                    self._cFunction.apply(this, arguments);
+                });
             }
 
         },
-        _adjustMousewheelValues : function(e){
-            e.testomat = '.:: Hello World ::.';
-            return e;
+        _afterEventBeforeCallback : function(e){
+
+            if(!e.deltaX && !e.deltaY &&!e.deltaZ){
+                e.deltaX = e.wheelDelta || 120;
+                e.deltaY = e.wheelDelta || 120;
+                e.deltaZ = e.wheelDelta || 120;
+            }
+
         },
         _initMousewheelEventType : function(){
             if(!this._feature.mousewheel){
@@ -210,10 +224,6 @@
                 Window.prototype.on  = addEventListenerCain;
                 Window.prototype.off = removeEventListenerCain;
             }
-            if(Document){
-                Document.prototype.on  = addEventListenerCain;
-                Document.prototype.off = removeEventListenerCain;
-            }
 
         },
         _isElementInstantiated : function(){
@@ -247,10 +257,6 @@
                             e.target= e.srcElement;
                             e.currentTarget=self;
 
-                            if(context.prototype._adjustMousewheelValues) {
-                                e = context._adjustMousewheelValues.apply(self, e);
-                            }
-
                             if(listener.handleEvent){
                                 listener.handleEvent(e);
                             } else {
@@ -281,10 +287,6 @@
                 if (Window) {
                     Window.prototype.addEventListener = this._addEventListener;
                     Window.prototype.removeEventListener = this._removeEventListener;
-                }
-                if (Document) {
-                    Document.prototype.addEventListener = this._addEventListener;
-                    Document.prototype.removeEventListener = this._removeEventListener;
                 }
 
             }

@@ -1,4 +1,17 @@
-### Mousewheel-Eventhandler ( please do not use, "lib is in progress" )
+#### Mousewheel-Eventhandler - Release Candidate 1 - ( lib is in progress )
+
+#### Usage
+
+````js
+var instance = new Mousewheel('#some-id', function(e){
+    e.preventDefault();
+    // > console.dir for log objects in IE8(Browsermode) --> IE10 Dev-Tool
+    console.dir(e);
+    //> or log e.__mousewheel__
+    // collection of useful mousewheel properties
+    console.dir(e.__mousewheel__);
+});
+````js
 
 #### Features
 

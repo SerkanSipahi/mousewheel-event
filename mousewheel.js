@@ -31,16 +31,23 @@
             this._init.apply(this, arguments);
         },
 
+        _VERSION : 'v0.1',
+
         /**
          * @default options
          */
         _defaults : {
             prevenDefault : false,
             stopPropagation : false,
+            //**** behaviors ***
             smooth : false,
             unit : 'px',
             distance : null,
-            duration : 500
+            duration : 500,
+            //***********************
+            // > same behavior in all browser
+            //   see wrapped _defaults options
+            sameBehavoior : false
         },
 
        /**

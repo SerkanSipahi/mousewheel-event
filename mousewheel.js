@@ -11,6 +11,18 @@
      *
      * **********************************************************
      * **********************************************************
+     *
+     * *** Crossbrowser Support --> IE8,9,10,11, Chrome, FF,
+     * *** Opera, Safari
+     *
+     * Simple Usage
+     * *****************
+     *
+     * var instance = new Mousewheel('#some-id', function(e){
+     *     e.preventDefault();
+     *     console.dir(e);
+     * });
+     *
      */
 
     Classy('Mousewheel', {
@@ -200,7 +212,7 @@
 
                 // > determine direction for Firefox, IE(>=8 && <=11)
                 // > notice: FF=Firefox, IE=Internet-Explorer
-                //           this.__context = this/self of mousewheel class
+                //   this.__context = this/self of mousewheel class
                 var FFreverse = context._determineDirection(e.detail),
                     IEreverse = -1;
 

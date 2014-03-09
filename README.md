@@ -3,12 +3,12 @@
 #### Features
 
 - Tablet/Smartphone Support
-- AMD-Support( requirejs, nodejs  )
+- AMD, CommonJs Support( requirejs, nodejs  )
 - no dependencies( Vanillajs, plain Javascript )
 
 #### Browser Support
 - Crossbrowser Support
-    - Chrome, Firefox, Opera, IE8, 9, 10, 11
+    - Chrome, Firefox, Opera, Safari, IE8, 9, 10, 11
 
 #### Notes
 

@@ -11,7 +11,7 @@ var instance = new Mousewheel('#some-id', function(e){
     // collection of useful mousewheel properties
     console.dir(e.__mousewheel__);
 });
-````js
+````
 
 #### Features
 

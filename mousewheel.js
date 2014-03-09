@@ -57,6 +57,13 @@
         _mousewheel : 'mousewheel',
 
         /**
+         * direction mousewheel(up/down)
+         */
+        _direction : {
+            mousewheel : null
+        },
+
+        /**
          * @Helper functions
          */
         _is : function(typeName, value){
@@ -138,27 +145,65 @@
         },
         _start : function(){
 
-            var res = this._$(this._cElement), item= 0, length= 0, self=this;
+            var res = this._$(this._cElement), item= 0, length= 0, self=this, directionMW=null;
             for(item=0, length=res.length; item<length; item++){
                 res[item].on(self._mousewheel, function(e){
-
-                    e.__mousewheel__ = {};
-                    e.__mousewheel__.currentTarget=this;
-                    e.__mousewheel__.instance=self;
-
+                    this.__context__ = self;
                     self._afterEventBeforeCallback.apply(this, [e]);
                     self._cFunction.apply(this, arguments);
                 });
             }
 
         },
+        _determineDirection : function(value){
+            return value < 0 ? -1 : + 1;
+        },
         _afterEventBeforeCallback : function(e){
 
+            /**
+             * Crossbrowser mousewheel calibration
+             */
+
+            // > this.__context__ = self/this scope of mousewheel class
+            var context=this.__context__, directionMW=null;
+            context._direction.mousewheel = context._determineDirection(e.deltaY);
+
             if(!e.deltaX && !e.deltaY &&!e.deltaZ){
-                e.deltaX = e.wheelDelta || 120;
-                e.deltaY = e.wheelDelta || 120;
-                e.deltaZ = e.wheelDelta || 120;
+
+                // > determine direction for Firefox, IE(>=7 && <=11)
+                // > notice: FF=Firefox, IE=Internet-Explorer
+                //           this.__context = this/self of mousewheel class
+
+                var FFreverse = context._determineDirection(e.detail),
+                    IEreverse = -1;
+
+                // > firefox has not e.deltaX, e.deltaY, e.deltaZ
+                //   and e.wheelDelta, too. So we give them tmpValue of 40
+                //   and assign it to new props e.deltaY, ..., ...
+                e.deltaX = ( e.wheelDelta * IEreverse ) || ( 40 * FFreverse );
+                e.deltaY = ( e.wheelDelta * IEreverse ) || ( 40 * FFreverse );
+                e.deltaZ = ( e.wheelDelta * IEreverse ) || ( 40 * FFreverse );
+
+                context._direction.mousewheel = context._determineDirection(e.deltaY);
+
             }
+
+            // > directionMW = directionMousewheel
+            directionMW = context._direction.mousewheel;
+
+            e.__mousewheel__ = {};
+            e.__mousewheel__.currentTarget=this;
+            e.__mousewheel__.instance=context;
+
+            e.__mousewheel__.deltaX = e.deltaX;
+            e.__mousewheel__.deltaY = e.deltaY;
+            e.__mousewheel__.deltaZ = e.deltaZ;
+
+            e.__mousewheel__.intDirectionX = directionMW;
+            e.__mousewheel__.intDirectionY = directionMW;
+
+            e.__mousewheel__.speackDirectionX = directionMW < 0 ? 'left' : 'right';
+            e.__mousewheel__.speackDirectionY = directionMW < 0 ? 'up'  : 'down';
 
         },
         _initMousewheelEventType : function(){

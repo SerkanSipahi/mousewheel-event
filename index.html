@@ -6,6 +6,7 @@
     <script src="libs/classy.js"></script>
     <script src="mousewheel.js"></script>
     <script>
+
         domReady(function () {
             /*
             var addInstance    = new Mousewheel('#test-id', function(e){}),
@@ -23,15 +24,18 @@
                 addInstance._$('#some-id')[0].innerHTML = 'Click disable';
             });
             */
-            var i = 0;
+
             new Mousewheel('#some-id', function(e){
                 e.preventDefault();
-                console.dir(e);
-
                 e.currentTarget.scrollTop += e.deltaY;
-            }, true, true); // > info: arg1 = true, prefentDefault, arg2 = true, stopPropagation
+                console.dir(e.__mousewheel__);
+            }, true, true, { smooth : true, distance : 120, duration : 300 }); // > info: arg1 = true, preventDefault, arg2 = true, stopPropagation
 
         });
+        domReady.error(function(error){
+            throw Error(error.name+': '+error.message);
+        });
+
     </script>
     <style>
         #some-id {
@@ -151,7 +155,214 @@
             Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
             Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
         </p>
-
+        <p>
+            111Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            111Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            111Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+        </p>
+        <p>
+            222Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            222Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            222Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+        </p>
+        <p>
+            333Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            333Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            333Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+        </p>
+        <p>
+            444Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            444Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            444Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+        </p>
+        <p>
+            555Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            555Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            555Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+        </p>
+        <p>
+            666Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            666Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            666Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+        </p>
+        <p>
+            777Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            777Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            777Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+        </p>
+        <p>
+            888Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            888Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            888Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+        </p>
+        <p>
+            111Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            111Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            111Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+        </p>
+        <p>
+            222Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            222Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            222Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+        </p>
+        <p>
+            333Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            333Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            333Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+        </p>
+        <p>
+            444Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            444Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            444Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+        </p>
+        <p>
+            555Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            555Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            555Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+        </p>
+        <p>
+            666Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            666Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            666Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+        </p>
+        <p>
+            777Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            777Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            777Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+        </p>
+        <p>
+            888Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            888Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            888Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+            Lorum ipsum datsum joko nico ladi du. Wada nakodi hama lodu wa di ko nakida tuz la.
+        </p>
     </div>
     <div id="other-id" style="width:100px; height:50px; background-color:blue; color:white; margin-top:10px;">
         Remove event handler
